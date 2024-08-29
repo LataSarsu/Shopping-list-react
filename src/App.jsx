@@ -4,17 +4,22 @@ import Form from "./components/Form";
 import Filter from "./components/Filter";
 
 function App() {
-  const [count, setCount] = useState(0);
-  const [item, setItem] = useState("");
+  const [items, setItems] = useState([]);
+
+  const handleAddItem = (item) => {
+    setItems((prevItems) => [...prevItems, item]);
+  };
+  const handleRemove = (index) => {
+    setItems((prevItems) => prevItems.filter((_, i) => i !== index));
+  };
+  const handleClear = () => {
+    setItems([]);
+  };
   return (
-    <div className="container">
-      <header>
-        <img src="./images/note.png" alt="" />
-        <h1>Shopper's stop</h1>
-      </header>
-      <Form />
-      <Filter />
-    </div>
+    <>
+      <Form onAddItem={handleAddItem} />
+      <Filter items={items} onRemove={handleRemove} onClear={handleClear} />
+    </>
   );
 }
 
